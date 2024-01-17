@@ -1,0 +1,8 @@
+.custom-toolbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000; /* Ajusta el valor según sea necesario para superponer el resto del contenido */
+}
+.example-spacer{
+    flex: 1 1 auto;
+}

@@ -1,0 +1,34 @@
+<mat-toolbar class="custom-toolbar" style="background-color: #1b408c;" color="primary">
+    <div >
+        <a mat-button class="example-icon mr20" href="#inicio">
+            <h1>Inicio</h1>
+        </a>
+        <a mat-button class="example-icon mr20" href="#ubicanos">
+            <h1>Ubicanos</h1>
+        </a>
+        <a mat-button class="example-icon mr20" [routerLink]="'/eventos'">
+            <h1>Eventos</h1>
+        </a>
+        <a mat-button class="example-icon mr20" [routerLink]="'/propuestas'">
+            <h1>Propuestas</h1>
+        </a>
+        <a mat-button class="example-icon mr20" [routerLink]="'/proyectos'">
+            <h1>Proyectos</h1>
+        </a>
+        <a mat-button class="example-icon mr20" [routerLink]="'/quejas'">
+            <h1>Quejas</h1>
+        </a>
+    </div>
+    <span class="example-spacer"></span>
+    <ng-container *ngIf="isLoggedIn | async; else notLoggedIn">
+        <!-- Usuario autenticado -->
+        <a (click)="logout()" mat-button class="example-icon favorite-icon mr20">
+          <h1>Cerrar sesión</h1>
+        </a>
+    </ng-container>
+      <ng-template #notLoggedIn>
+        <a [routerLink]="'/iniciar-sesion'" mat-button class="example-icon favorite-icon mr20">
+          <h1>Iniciar sesión</h1>
+        </a>
+      </ng-template>
+</mat-toolbar>
