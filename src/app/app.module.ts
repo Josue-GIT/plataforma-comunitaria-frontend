@@ -20,6 +20,7 @@ import { PropuestasComponent } from './pages/propuestas/propuestas.component';
 import { ProyectosComponent } from './pages/proyectos/proyectos.component';
 import { QuejasComponent } from './pages/quejas/quejas.component';
 import { LoginComponent } from './auth/login/login.component';
+import { RegistroComponent } from './auth/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoginComponent } from './auth/login/login.component';
     PropuestasComponent,
     ProyectosComponent,
     QuejasComponent,
-    LoginComponent
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
