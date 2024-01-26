@@ -1,0 +1,11 @@
+/* En tu archivo de estilos (por ejemplo, styles.css) */
+
+.voto-arriba-seleccionado {
+    background-color: green;  /* Cambia el color a verde cuando está seleccionado */
+    color: white;  /* Cambia el color del texto a blanco para mayor contraste */
+  }
+  
+  .voto-abajo-seleccionado {
+    background-color: red;  /* Cambia el color a rojo cuando está seleccionado */
+    color: white;  /* Cambia el color del texto a blanco para mayor contraste */
+  }

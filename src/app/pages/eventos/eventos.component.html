@@ -1,2 +1,43 @@
 <br><br><br>
-<p>eventos works!</p>
+<div class="container mt-5">
+    <mat-toolbar color="primary">
+      <span>Lista de Eventos</span>
+    </mat-toolbar>
+  
+    <div *ngIf="eventos && eventos.length > 0" class="mt-4">
+      <div class="row">
+        <div *ngFor="let evento of eventos" class="col-md-4 mb-4">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ evento.titulo }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="evento.url || 'https://via.placeholder.com/300'" alt="Imagen del evento">
+            <mat-card-content>
+              <p><strong>Fecha y Hora:</strong> {{ evento.fechaHora }}</p>
+              <p><strong>Ubicación:</strong> {{ evento.ubicacion }}</p>
+              <p><strong>Descripción:</strong> {{ evento.descripcion }}</p>
+              <p><strong>Participantes:</strong>
+                <span *ngIf="evento.participantes && evento.participantes.length > 0">
+                  {{ formatParticipantes(evento.participantes) }}
+                </span>
+                <span *ngIf="!evento.participantes || evento.participantes.length === 0">Ninguno</span>
+              </p>
+              <mat-card-actions>
+                <button mat-button color="accent" (click)="abrirGoogleMaps(evento.ubicacion)">
+                  Abrir Google Maps
+                </button>
+              </mat-card-actions>
+              
+            </mat-card-content>
+            <mat-card-actions>
+              <!-- Puedes agregar acciones de tarjeta aquí si es necesario -->
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!eventos || eventos.length === 0" class="mt-4">
+      <p class="alert alert-info">No hay eventos disponibles en este momento.</p>
+    </div>
+</div>

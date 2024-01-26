@@ -1,2 +1,24 @@
 <br><br><br>
-<p>propuestas works!</p>
+<p>Usuario en sesión: {{ loggedInUserId }}</p>
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let propuesta of propuestas">
+            <mat-expansion-panel-header>
+            <button mat-icon-button (click)="manejarClicVotar($event, propuesta)">
+                ↑
+            </button>
+            <button mat-icon-button (click)="manejarClicVotar($event, propuesta)">
+                ↓
+            </button>
+            <span style="margin-right: 20px; margin-top: 10px;">{{ esObjeto(propuesta.votos) ? propuesta.votos.cantidadVotosPositivos : propuesta.votos || 0 }}</span>
+            
+            <span style="margin-top: 10px;">{{ propuesta.titulo }}</span>
+            
+            </mat-expansion-panel-header>
+        
+            <div>
+            <p>{{ propuesta.descripcion }}</p>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

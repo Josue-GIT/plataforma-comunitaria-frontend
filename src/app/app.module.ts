@@ -21,6 +21,8 @@ import { ProyectosComponent } from './pages/proyectos/proyectos.component';
 import { QuejasComponent } from './pages/quejas/quejas.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,9 @@ import { RegistroComponent } from './auth/registro/registro.component';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatIconModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]
