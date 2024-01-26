@@ -15,4 +15,13 @@ export class VotosPropuestaService {
     return this.http.get<number>(url);
   }
 
+  votarPropuestaPositivo(idPropuesta: number, idUsuario: number): Observable<any> {
+    const url = `${this.apiUrl}/votar/${idPropuesta}/${idUsuario}`;
+    return this.http.post(url, {});
+  }
+
+  cancelarVotoPositivo(idPropuesta: number, idUsuario: number): Observable<any> {
+    const url = `${this.apiUrl}/cancelarVoto/${idPropuesta}/${idUsuario}`;
+    return this.http.delete(url);
+  }
 }

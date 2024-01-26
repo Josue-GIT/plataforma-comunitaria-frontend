@@ -15,6 +15,7 @@
   export class PropuestasComponent implements OnInit {
     propuestas: Propuesta[] = [];
     loggedInUserId: number | null = null;
+typeof: any;
     
     constructor(
       private propuestaService: PropuestaService,
@@ -32,9 +33,42 @@
       this.cargarPropuestas();
       this.loggedInUserId = this.authService.getLoggedInUserId();
     }
-
+    votarPositivo(idPropuesta: number) {
+      this.votosPropuestaService.votarPropuestaPositivo(idPropuesta, this.loggedInUserId ?? 0).subscribe(
+        () => {
+          this.cargarPropuestas();
+        },
+        (error) => {
+          console.error(`Error al votar positivamente para la propuesta ${idPropuesta}`, error);
+        }
+      );
+    }
+  
+    cancelarVotoPositivo(idPropuesta: number) {
+      this.votosPropuestaService.cancelarVotoPositivo(idPropuesta, this.loggedInUserId ?? 0).subscribe(
+        (response) => {
+          if (response && response.message) {
+            console.log(response.message); // Imprime el mensaje del servidor
+          }
+          this.cargarPropuestas();
+          
+        },
+        (error) => {
+          console.error(`Error al cancelar el voto positivo para la propuesta ${idPropuesta}`, error);
+        }
+      );
+    }
+    
     manejarClicVotar(event: Event, propuesta: Propuesta) {
-      event.stopPropagation();  // Evita la propagación del evento al acordeón
+      event.stopPropagation();  
+
+      if (propuesta.votos && typeof propuesta.votos === 'object') {
+        // Se ha votado positivamente, cancelar voto
+        this.cancelarVotoPositivo(propuesta.id);
+      } else {
+        // No se ha votado positivamente, votar positivamente
+        this.votarPositivo(propuesta.id);
+      }
     }
 
     cargarPropuestas() {

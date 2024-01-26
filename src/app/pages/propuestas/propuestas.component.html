@@ -1,15 +1,17 @@
 <br><br><br>
+usar modal para el registro
 <p>Usuario en sesión: {{ loggedInUserId }}</p>
 <div class="container">
     <mat-accordion>
         <mat-expansion-panel *ngFor="let propuesta of propuestas">
             <mat-expansion-panel-header>
-            <button mat-icon-button (click)="manejarClicVotar($event, propuesta)">
-                ↑
-            </button>
-            <button mat-icon-button (click)="manejarClicVotar($event, propuesta)">
-                ↓
-            </button>
+                <button mat-icon-button (click)="votarPositivo(propuesta.id)">
+                    ↑
+                </button>
+                <button mat-icon-button (click)="cancelarVotoPositivo(propuesta.id)">
+                    ↓
+                </button>
+            
             <span style="margin-right: 20px; margin-top: 10px;">{{ esObjeto(propuesta.votos) ? propuesta.votos.cantidadVotosPositivos : propuesta.votos || 0 }}</span>
             
             <span style="margin-top: 10px;">{{ propuesta.titulo }}</span>
@@ -18,6 +20,7 @@
         
             <div>
             <p>{{ propuesta.descripcion }}</p>
+            <p>URL: {{ propuesta.url }}</p>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
