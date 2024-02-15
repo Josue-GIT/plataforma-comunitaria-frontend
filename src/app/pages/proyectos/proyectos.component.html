@@ -1,3 +1,39 @@
-
 <br><br><br>
-<p>proyectos works!</p>
+<div class="container mt-5">
+    <mat-toolbar color="primary">
+      <span>Lista de Quejas</span>
+    </mat-toolbar>
+  
+    <div *ngIf="proyectos && proyectos.length > 0" class="mt-4">
+      <div class="row">
+        <div *ngFor="let proyecto of proyectos" class="col-md-4 mb-4">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ proyecto.titulo }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="proyecto.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja">
+            <mat-card-content>
+                <br>
+              <p><strong>Descripción:</strong> {{ proyecto.descripcion }}</p>
+              <p><strong>Estado:</strong> {{ proyecto.estado }}</p>
+              <!--
+              <mat-card-actions>
+                <button mat-button color="accent" (click)="abrirGoogleMaps(proyecto.ubicacion)">
+                  Abrir Google Maps
+                </button>
+              </mat-card-actions>
+              -->
+              
+            </mat-card-content>
+            <mat-card-actions>
+              <!-- Puedes agregar acciones de tarjeta aquí si es necesario -->
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!proyectos|| proyectos.length === 0" class="mt-4">
+      <p class="alert alert-info">No se muestran los proyectos en este momento.</p>
+    </div>
+</div>

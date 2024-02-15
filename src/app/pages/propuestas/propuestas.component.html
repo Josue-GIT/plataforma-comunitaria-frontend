@@ -2,6 +2,10 @@
 usar modal para el registro
 <p>Usuario en sesión: {{ loggedInUserId }}</p>
 <div class="container">
+    <mat-toolbar color="primary">
+        <span>Propuestas de la comunidad</span>
+      </mat-toolbar>
+    <br>
     <mat-accordion>
         <mat-expansion-panel *ngFor="let propuesta of propuestas">
             <mat-expansion-panel-header>
@@ -20,8 +24,14 @@ usar modal para el registro
         
             <div>
             <p>{{ propuesta.descripcion }}</p>
-            <p>URL: {{ propuesta.url }}</p>
+            <div style="display: flex; justify-content: center;">
+                <img mat-card-image [src]="propuesta.url || 'https://via.placeholder.com/300'" alt="Imagen de la propuesta" style="width: 800px;">
+              </div>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
+    <div *ngIf="!propuestas|| propuestas.length === 0" class="mt-4">
+        <p class="alert alert-info">No se muestran las propuestas en este momento.</p>
+      </div>
 </div>
+

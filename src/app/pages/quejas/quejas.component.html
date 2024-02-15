@@ -1,2 +1,39 @@
 <br><br><br>
-<p>quejas works!</p>
+<div class="container mt-5">
+    <mat-toolbar color="primary">
+      <span>Lista de Quejas</span>
+    </mat-toolbar>
+  
+    <div *ngIf="quejas && quejas.length > 0" class="mt-4">
+      <div class="row">
+        <div *ngFor="let queja of quejas" class="col-md-4 mb-4">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ queja.titulo }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="queja.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja">
+            <mat-card-content>
+                <br>
+              <p><strong>Fecha de la queja:</strong> {{ queja.fechaReporte}}</p>
+              <p><strong>Ubicación:</strong> {{ queja.ubicacion }}</p>
+              <p><strong>Descripción:</strong> {{ queja.descripcion }}</p>
+              <mat-card-actions>
+                <button mat-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">
+                  Abrir Google Maps
+                </button>
+              </mat-card-actions>
+              
+            </mat-card-content>
+            <mat-card-actions>
+              <!-- Puedes agregar acciones de tarjeta aquí si es necesario -->
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!quejas|| quejas.length === 0" class="mt-4">
+      <p class="alert alert-info">No se muestran las quejas en este momento.</p>
+    </div>
+</div>
+

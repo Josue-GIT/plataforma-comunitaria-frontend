@@ -12,7 +12,7 @@ import { Evento } from 'src/app/service/model/Evento';
 export class EventosComponent implements OnInit {
   eventos: Evento[] = [];
 
-  constructor(private eventoService: EventoService, private sanitizer: DomSanitizer) { }
+  constructor(private eventoService: EventoService) { }
 
   ngOnInit(): void {
     this.cargarEventos();
