@@ -1,0 +1,11 @@
+.card-resolved {
+    border: 2px solid green;
+  }
+  
+  .card-pending {
+    border: 2px solid red;
+  }
+  
+  .card-other {
+    border: 2px solid grey;
+  }

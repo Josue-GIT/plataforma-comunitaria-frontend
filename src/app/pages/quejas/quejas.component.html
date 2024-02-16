@@ -7,9 +7,10 @@
     <div *ngIf="quejas && quejas.length > 0" class="mt-4">
       <div class="row">
         <div *ngFor="let queja of quejas" class="col-md-4 mb-4">
-          <mat-card>
+          <mat-card [ngClass]="{'card-resolved': queja.estado === 'resuelto', 'card-pending': queja.estado === 'pendiente', 'card-other': queja.estado !== 'resuelto' && queja.estado !== 'pendiente'}">
             <mat-card-header>
               <mat-card-title>{{ queja.titulo }}</mat-card-title>
+              <div style="margin-left: 200px;" [ngStyle]="{'color': queja.estado === 'resuelto' ? 'green' : (queja.estado === 'pendiente' ? 'red' : 'grey')}">{{ queja.estado }}</div>
             </mat-card-header>
             <img mat-card-image [src]="queja.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja">
             <mat-card-content>
@@ -17,6 +18,7 @@
               <p><strong>Fecha de la queja:</strong> {{ queja.fechaReporte}}</p>
               <p><strong>Ubicación:</strong> {{ queja.ubicacion }}</p>
               <p><strong>Descripción:</strong> {{ queja.descripcion }}</p>
+              <p><strong>Estado: </strong> {{queja.estado}}</p>
               <mat-card-actions>
                 <button mat-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">
                   Abrir Google Maps
