@@ -29,6 +29,7 @@ export class EventosComponent implements OnInit {
     this.eventoService.obtenerEventos().subscribe(
       (data: Evento[]) => {
         this.eventos = data;
+        this.verificarParticipacionUsuario();
       },
       (error) => {
         console.error('Error al obtener eventos:', error);
@@ -78,6 +79,56 @@ export class EventosComponent implements OnInit {
                 confirmButtonText: 'Aceptar'
               });
             }
+          }
+        );
+      }
+    });
+  }
+  verificarParticipacionUsuario(): void {
+    this.eventos.forEach(evento => {
+      this.participacionEventoService.obtenerParticipantesDelEvento(evento.id).subscribe(
+        (participantes: any[]) => {
+          evento.participantes = participantes;
+        },
+        (error) => {
+          console.error('Error al obtener participantes del evento:', error);
+        }
+      );
+    });
+  }
+  usuarioRegistradoEnEvento(evento: Evento): boolean {
+    if (!evento.participantes) {
+      return false; // Si no hay participantes, el usuario no está registrado
+    }
+    // Verificar si el usuario actual está en la lista de participantes del evento
+    return evento.participantes.some(participante => participante.usuario.id === this.loggedInUserId);
+  }
+
+  cancelarParticipacion(evento: Evento): void {
+    Swal.fire({
+      title: '¿Seguro que quieres cancelar tu participación en el evento?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.participacionEventoService.cancelarParticipacion(evento.id, this.loggedInUserId!).subscribe(
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: '¡Participación en evento cancelada exitosamente!',
+              confirmButtonText: 'Aceptar'
+            });
+            this.cargarEventos(); // Recargar los eventos después de cancelar la participación
+          },
+          (error: any) => {
+            console.error('Error al cancelar la participación en el evento:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Hubo un error al cancelar la participación en el evento. Por favor, inténtalo de nuevo más tarde.',
+              confirmButtonText: 'Aceptar'
+            });
           }
         );
       }

@@ -7,7 +7,7 @@ export interface Evento {
     descripcion: string;
     fechaHora: string;
     ubicacion: string;
-    participantes?: ParticipacionEvento[];
+    participantes: ParticipacionEvento[];
   }
   
   export interface ParticipacionEvento {

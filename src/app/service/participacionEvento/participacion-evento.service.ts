@@ -10,6 +10,11 @@ export class ParticipacionEventoService {
 
   constructor(private http: HttpClient) { }
 
+  obtenerParticipantesDelEvento(eventoId: number): Observable<any[]> {
+    const url = `${this.baseUrl}/evento/${eventoId}`;
+    return this.http.get<any[]>(url);
+  }
+
   guardarParticipacion(eventoId: number, usuarioId: number): Observable<any> {
     const url = `${this.baseUrl}/guardar`;
     const body = {
@@ -17,5 +22,9 @@ export class ParticipacionEventoService {
       usuario: { id: usuarioId }
     };
     return this.http.post<any>(url, body);
+  }
+  cancelarParticipacion(eventoId: number, usuarioId: number): Observable<any> {
+    const url = `${this.baseUrl}/cancelar-participacion/${usuarioId}/${eventoId}`;
+    return this.http.delete<any>(url);
   }
 }
