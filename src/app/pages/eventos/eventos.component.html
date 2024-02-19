@@ -1,4 +1,5 @@
 <br><br><br>
+<p>Usuario en sesión: {{ loggedInUserId }}</p>
 <div class="container mt-5">
     <mat-toolbar color="primary">
       <span>Lista de Eventos</span>
@@ -23,7 +24,7 @@
                 <span *ngIf="!evento.participantes || evento.participantes.length === 0">Ninguno</span>
               </p>
               <mat-card-actions class="d-flex justify-content-between">
-                <button mat-raised-button color="primary" style="margin-right: 8px;">Participar en el evento</button>
+                <button mat-raised-button color="primary" style="margin-right: 8px;" (click)="confirmarParticipacion(evento)">Participar en el evento</button>
                 <button mat-raised-button color="accent" (click)="abrirGoogleMaps(evento.ubicacion)">Abrir Google Maps</button>
               </mat-card-actions>
             </mat-card-content>

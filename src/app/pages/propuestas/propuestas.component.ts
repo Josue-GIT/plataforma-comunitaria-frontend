@@ -15,7 +15,7 @@
   export class PropuestasComponent implements OnInit {
     propuestas: Propuesta[] = [];
     loggedInUserId: number | null = null;
-typeof: any;
+  typeof: any;
     
     constructor(
       private propuestaService: PropuestaService,
