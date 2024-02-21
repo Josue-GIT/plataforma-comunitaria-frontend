@@ -7,7 +7,16 @@ import { AuthService } from './auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'plataforma-comunitaria-frontend';
+export class AppComponent implements OnInit {
 
+  title = 'plataforma-comunitaria-frontend';
+  isAdmin: boolean = false;
+
+  constructor(private authService: AuthService) {}
+  
+  ngOnInit(): void {
+    this.authService.getUserRole().subscribe(role => {
+      this.isAdmin = role === 'ADMIN';
+    });
+  }
 }

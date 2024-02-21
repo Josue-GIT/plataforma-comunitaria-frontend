@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.co
     MatCardModule,
     MatExpansionModule,
     MatIconModule, 
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

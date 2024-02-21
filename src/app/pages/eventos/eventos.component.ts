@@ -6,6 +6,7 @@ import { Evento } from 'src/app/service/model/Evento';
 import { ParticipacionEventoService } from 'src/app/service/participacionEvento/participacion-evento.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-eventos',
@@ -26,7 +27,9 @@ import Swal from 'sweetalert2';
 
 export class EventosComponent implements OnInit {
   eventos: Evento[] = [];
+  eventosPaginados: Evento[] = [];
   loggedInUserId: number | null = null;
+  userRole: string | null = null;
 
   constructor(private eventoService: EventoService,
     private authService: AuthService,
@@ -35,6 +38,19 @@ export class EventosComponent implements OnInit {
   ngOnInit(): void {
     this.cargarEventos();
     this.loggedInUserId = this.authService.getLoggedInUserId();
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role;
+    });
+    this.eventoService.obtenerEventos().subscribe(
+      (data: Evento[]) => {
+        this.eventos = data;
+        this.eventosPaginados = this.eventos.slice(0, 6); // Mostrar los primeros 6 eventos por defecto
+        this.verificarParticipacionUsuario();
+      },
+      (error) => {
+        console.error('Error al obtener eventos:', error);
+      }
+    );
   }
 
   cargarEventos(): void {
@@ -145,5 +161,15 @@ export class EventosComponent implements OnInit {
         );
       }
     });
+  }
+
+  isAdmin(): boolean {
+    return this.userRole === 'ADMIN';
+  }
+
+  onPaginateChange(event: PageEvent): void {
+    const startIndex = event.pageIndex * event.pageSize;
+    const endIndex = Math.min(startIndex + event.pageSize, this.eventos.length);
+    this.eventosPaginados = this.eventos.slice(startIndex, endIndex);
   }
 }
