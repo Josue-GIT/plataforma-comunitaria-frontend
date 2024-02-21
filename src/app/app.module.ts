@@ -23,6 +23,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { MatIconModule } from '@angular/material/icon';
     ProyectosComponent,
     QuejasComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    PerfilComponent,
+    EventoModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,8 +58,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatExpansionModule,
     MatIconModule, 
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class EventoModalModule { }

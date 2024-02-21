@@ -4,12 +4,24 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { EventoService } from 'src/app/service/evento/evento.service';
 import { Evento } from 'src/app/service/model/Evento';
 import { ParticipacionEventoService } from 'src/app/service/participacionEvento/participacion-evento.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
-  styleUrls: ['./eventos.component.css']
+  styleUrls: ['./eventos.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8)' })),
+      ]),
+    ]),
+  ],
 })
 
 export class EventosComponent implements OnInit {

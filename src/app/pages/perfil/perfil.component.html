@@ -1,0 +1,52 @@
+<br><br><br>
+<p>Usuario en sesión: {{ loggedInUserId }}</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header text-center">
+            <h2 class="mb-0">Perfil de Usuario</h2>
+          </div>
+          <div class="card-body">
+  
+            <div *ngIf="user">
+              <h2 class="mb-3">Perfil de {{ user.nombre }}</h2>
+              <div>
+                <div class="mb-3">
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" class="form-control" value="{{ user.username }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre">Nombre:</label>
+                    <input id="nombre" type="text" class="form-control" value="{{ user.nombre }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="apellido">Apellido:</label>
+                    <input id="apellido" type="text" class="form-control" value="{{ user.apellido }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input id="email" type="email" class="form-control" value="{{ user.email }}" readonly>
+                </div>
+              </div>
+              <div class="row justify-content-center mt-5">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Mis Eventos</h3>
+                      <button class="btn btn-primary" (click)="verEventosUsuario()">Ver Mis Eventos</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+           
+            </div>
+            
+            <div *ngIf="!user">
+                <p class="alert alert-info">No se pudo cargar el perfil de usuario en este momento.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

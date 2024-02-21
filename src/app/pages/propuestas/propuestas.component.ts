@@ -5,8 +5,7 @@
   import { Propuesta } from 'src/app/service/model/Propuesta';
   import { PropuestaService } from 'src/app/service/propuesta/propuesta.service';
   import { VotosPropuestaService } from 'src/app/service/propuesta/votos-propuesta.service';
-  import { concatMap, finalize } from 'rxjs/operators';
-  
+
   @Component({
     selector: 'app-propuestas',
     templateUrl: './propuestas.component.html',

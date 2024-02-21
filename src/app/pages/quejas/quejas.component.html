@@ -6,13 +6,13 @@
   
     <div *ngIf="quejas && quejas.length > 0" class="mt-4">
       <div class="row">
-        <div *ngFor="let queja of quejas" class="col-md-4 mb-4">
+        <div *ngFor="let queja of quejas" class="col-md-4 mb-4" [@fadeInOut]>
           <mat-card [ngClass]="{'card-resolved': queja.estado === 'resuelto', 'card-pending': queja.estado === 'pendiente', 'card-other': queja.estado !== 'resuelto' && queja.estado !== 'pendiente'}">
             <mat-card-header>
               <mat-card-title>{{ queja.titulo }}</mat-card-title>
               <div style="margin-left: 200px;" [ngStyle]="{'color': queja.estado === 'resuelto' ? 'green' : (queja.estado === 'pendiente' ? 'red' : 'grey')}">{{ queja.estado }}</div>
             </mat-card-header>
-            <img mat-card-image [src]="queja.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja">
+            <img mat-card-image [src]="queja.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
             <mat-card-content>
                 <br>
               <p><strong>Fecha de la queja:</strong> {{ queja.fechaReporte}}</p>
@@ -20,15 +20,11 @@
               <p><strong>Descripción:</strong> {{ queja.descripcion }}</p>
               <p><strong>Estado: </strong> {{queja.estado}}</p>
               <mat-card-actions>
-                <button mat-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">
+                <button mat-raised-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">
                   Abrir Google Maps
                 </button>
               </mat-card-actions>
-              
             </mat-card-content>
-            <mat-card-actions>
-              <!-- Puedes agregar acciones de tarjeta aquí si es necesario -->
-            </mat-card-actions>
           </mat-card>
         </div>
       </div>

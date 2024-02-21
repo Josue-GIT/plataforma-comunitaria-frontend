@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Proyecto } from 'src/app/service/model/Proyecto';
@@ -6,7 +7,18 @@ import { ProyectoService } from 'src/app/service/proyecto/proyecto.service';
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
-  styleUrls: ['./proyectos.component.css']
+  styleUrls: ['./proyectos.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8)' })),
+      ]),
+    ]),
+  ],
 })
 export class ProyectosComponent {
   proyectos: Proyecto[] = [];

@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Queja } from 'src/app/service/model/Queja';
@@ -6,7 +7,18 @@ import { QuejaService } from 'src/app/service/queja/queja.service';
 @Component({
   selector: 'app-quejas',
   templateUrl: './quejas.component.html',
-  styleUrls: ['./quejas.component.css']
+  styleUrls: ['./quejas.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8)' })),
+      ]),
+    ]),
+  ],
 })
 export class QuejasComponent {
   quejas: Queja[] = [];
