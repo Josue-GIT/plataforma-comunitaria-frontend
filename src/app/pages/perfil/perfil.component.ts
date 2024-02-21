@@ -19,10 +19,14 @@ export class PerfilComponent implements OnInit{
 
   constructor(private authService: AuthService,
               private perfilService: PerfilService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private router:Router) { }
   
   ngOnInit() {
     this.loggedInUserId = this.authService.getLoggedInUserId();
+    if (!this.loggedInUserId) {
+      this.router.navigate(['/home']);
+    }
     if (this.loggedInUserId) {
       this.perfilService.obtenerPerfil(this.loggedInUserId).subscribe(
         (usuario: Usuario) => {

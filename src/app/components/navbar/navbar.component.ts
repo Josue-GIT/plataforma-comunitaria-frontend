@@ -1,5 +1,6 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -23,7 +24,8 @@ export class NavbarComponent {
   
   isLoggedIn!: Observable<boolean>;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private router: Router) { }
 
   
 
@@ -33,6 +35,8 @@ export class NavbarComponent {
 
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
+  
 }
 

@@ -15,9 +15,11 @@
         <a mat-button class="example-icon mr20" [routerLink]="'/quejas'">
             <h1>Quejas</h1>
         </a>
-        <a mat-button class="example-icon mr20" [routerLink]="'/perfil'">
-            <h1>Perfil</h1>
-        </a>
+        <ng-container *ngIf="isLoggedIn | async">
+            <a mat-button class="example-icon mr20" [routerLink]="'/perfil'">
+                <h1>Perfil</h1>
+            </a>
+        </ng-container>
     </div>
     <span class="example-spacer"></span>
     <ng-container *ngIf="isLoggedIn | async; else notLoggedIn">

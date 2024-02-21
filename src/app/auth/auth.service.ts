@@ -19,6 +19,10 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
+  isLoggedInValue(): boolean {
+    return this.loggedIn.getValue();
+  }
+  
   setLoggedInUser(user: any): void {
     this.loggedInUser = user;
   }
@@ -30,4 +34,5 @@ export class AuthService {
   logout(): void {
     this.loggedIn.next(false);
   }
+  
 }

@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
