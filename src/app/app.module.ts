@@ -27,6 +27,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { AgregarEventoComponent } from './modal-pages/agregar-evento/agregar-evento.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     RegistroComponent,
     PerfilComponent,
     EventoModalComponent,
+    AgregarEventoComponent,
   ],
   imports: [
     BrowserModule,

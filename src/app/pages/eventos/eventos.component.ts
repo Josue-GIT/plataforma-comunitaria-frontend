@@ -4,9 +4,11 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { EventoService } from 'src/app/service/evento/evento.service';
 import { Evento } from 'src/app/service/model/Evento';
 import { ParticipacionEventoService } from 'src/app/service/participacionEvento/participacion-evento.service';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import Swal from 'sweetalert2';
 import { PageEvent } from '@angular/material/paginator';
+import { AgregarEventoComponent } from 'src/app/modal-pages/agregar-evento/agregar-evento.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eventos',
@@ -22,6 +24,16 @@ import { PageEvent } from '@angular/material/paginator';
         animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8)' })),
       ]),
     ]),
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(100, [
+            animate('500ms ease-out', style({ opacity: 1 })),
+          ]),
+        ], { optional: true }),
+      ]),
+    ]),
   ],
 })
 
@@ -30,35 +42,43 @@ export class EventosComponent implements OnInit {
   eventosPaginados: Evento[] = [];
   loggedInUserId: number | null = null;
   userRole: string | null = null;
+  modalAbierto: boolean = false;
+  currentPageIndex: number = 0;
+  primerCargaCompleta: boolean = false;
+
 
   constructor(private eventoService: EventoService,
     private authService: AuthService,
-    private participacionEventoService: ParticipacionEventoService) { }
+    private participacionEventoService: ParticipacionEventoService,
+    private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.cargarEventos();
-    this.loggedInUserId = this.authService.getLoggedInUserId();
-    this.authService.getUserRole().subscribe(role => {
-      this.userRole = role;
-    });
-    this.eventoService.obtenerEventos().subscribe(
-      (data: Evento[]) => {
-        this.eventos = data;
-        this.eventosPaginados = this.eventos.slice(0, 6); // Mostrar los primeros 6 eventos por defecto
-        this.verificarParticipacionUsuario();
-      },
-      (error) => {
-        console.error('Error al obtener eventos:', error);
-      }
-    );
-  }
+    ngOnInit(): void {
+      this.loggedInUserId = this.authService.getLoggedInUserId();
+      this.authService.getUserRole().subscribe(role => {
+        this.userRole = role;
+      });
+      this.eventoService.obtenerEventos().subscribe(
+        (data: Evento[]) => {
+          this.eventos = data;
+          this.eventosPaginados = this.eventos.slice(0, 6); // Inicializar eventosPaginados
+          this.verificarParticipacionUsuario();
+          this.primerCargaCompleta = true; // Marcar la primera carga como completa
+        },
+        (error) => {
+          console.error('Error al obtener eventos:', error);
+        }
+      );
+    }
 
   cargarEventos(): void {
     this.eventoService.obtenerEventos().subscribe(
       (data: Evento[]) => {
         this.eventos = data;
+        this.eventosPaginados = this.eventos.slice(this.currentPageIndex * 6, (this.currentPageIndex + 1) * 6);
         this.verificarParticipacionUsuario();
-      },
+        
+      }
+      ,
       (error) => {
         console.error('Error al obtener eventos:', error);
       }
@@ -88,7 +108,8 @@ export class EventosComponent implements OnInit {
               html: 'Puedes ver los eventos en los que estás participando en tu perfil',
               confirmButtonText: 'Aceptar'
             });
-            this.cargarEventos(); // Recargar los eventos después de guardar la participación
+            this.cargarEventos();
+             // Recargar los eventos después de guardar la participación
           },
           (error: any) => {
             if (error.error === 'El usuario ya está participando en este evento') {
@@ -168,8 +189,64 @@ export class EventosComponent implements OnInit {
   }
 
   onPaginateChange(event: PageEvent): void {
+    this.currentPageIndex = event.pageIndex;
     const startIndex = event.pageIndex * event.pageSize;
     const endIndex = Math.min(startIndex + event.pageSize, this.eventos.length);
-    this.eventosPaginados = this.eventos.slice(startIndex, endIndex);
+    const nuevosEventos = this.eventos.slice(startIndex, endIndex);
+
+    // Agregar un retardo a la animación de los eventos que aparecen
+    setTimeout(() => {
+      this.eventosPaginados = nuevosEventos;
+    }, 500); // 500ms de retardo, ajusta el tiempo según tus necesidades
+  }
+
+  registrarEvento() {
+    const dialogRef = this.dialog.open(AgregarEventoComponent, {
+      width: '900px', 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal de eventos se cerró');
+      this.cargarEventos();
+    });
+  }
+  cerrarModal() {
+    // Cierra el modal
+    this.modalAbierto = false;
+    
+  }
+
+  eliminarEvento(eventoId: number): void {
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar este evento?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar evento'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventoService.eliminarEvento(eventoId).subscribe(
+          () => {
+            Swal.fire(
+              'Evento eliminado',
+              'El evento ha sido eliminado correctamente',
+              'success'
+            );
+            // Recargar los eventos después de eliminar
+            this.cargarEventos();
+          },
+          (error) => {
+            console.error('Error al eliminar el evento:', error);
+            Swal.fire(
+              'Error',
+              'Hubo un error al eliminar el evento. Por favor, inténtalo de nuevo más tarde.',
+              'error'
+            );
+          }
+        );
+      }
+    });
   }
 }
