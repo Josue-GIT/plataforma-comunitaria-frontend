@@ -1,0 +1,47 @@
+
+   <!-- agregar-evento.component.html -->
+  <h2 mat-dialog-title style="margin-bottom: 20px;">Agregar Queja</h2>
+  <form [formGroup]="quejaForm" class="mt-5" style="margin-bottom: 72px; max-width: 2000px;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header text-center">
+                <h2 class="mb-0">Registrar Queja</h2>
+              </div>titulo ubicacion descripcion
+              <div class="card-body">
+                <p class="text-danger">{{ registroError }}</p>
+                <div class="mb-3">
+                  <label for="inputTitulo" class="form-label">Título:</label>
+                  <input formControlName="titulo" type="text" class="form-control" id="inputTitulo" placeholder="Título de la Queja">
+                </div>
+                <div class="mb-3">
+                  <label for="inputDescripcion" class="form-label">Descripción:</label>
+                  <textarea formControlName="descripcion" class="form-control" id="inputDescripcion" rows="3" placeholder="Descripción del evento"></textarea>
+                </div>  
+                <div class="mb-3">
+                  <label for="inputUbicacion" class="form-label">Ubicación:</label>
+                  <input formControlName="ubicacion" type="text" class="form-control" id="inputUbicacion" placeholder="Ubicación del evento">
+                </div>
+                <div class="mb-3">
+                  <label for="inputUrl" class="form-label">URL:</label>
+                  <input formControlName="url" type="url" class="form-control" id="inputUrl" placeholder="URL de la Queja">
+                </div>
+                <!-- Puedes agregar más campos según sea necesario -->
+                <div class="text-center">
+                  <!-- Botón para registrar la queja -->
+                  <button type="button" class="btn btn-primary" (click)="agregarQueja()">Agregar Queja</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <div mat-dialog-actions>
+      <button mat-button  color="warn" (click)="cerrarModal()">Cerrar</button>
+      <button mat-button color="primary" (click)="agregarQueja()">Agregar Queja</button>
+    </div>
+
+

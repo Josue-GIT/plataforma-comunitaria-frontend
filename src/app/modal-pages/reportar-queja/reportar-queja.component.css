@@ -1,0 +1,12 @@
+/* Estilo para las opciones de radio */
+mat-radio-button {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el contenido */
+    margin-bottom: 10px; /* Agrega espacio entre cada opción */
+  }
+  
+  /* Estilo para el texto de las opciones de radio */
+  .mat-radio-label-content {
+    margin-left: 10px; /* Agrega espacio entre el botón de radio y el texto */
+  }
+  

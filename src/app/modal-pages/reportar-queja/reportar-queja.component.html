@@ -1,0 +1,23 @@
+<h2>Reportar Queja</h2>
+
+<div>
+    <mat-radio-group [(ngModel)]="razonSeleccionada">
+        <mat-radio-button value="ubicacionIncorrecta">Ubicación Incorrecta</mat-radio-button>
+        <mat-radio-button value="contenidoInapropiado">Contenido Inapropiado</mat-radio-button>
+        <mat-radio-button value="informacionErronea">Información Errónea</mat-radio-button>
+        <mat-radio-button value="duplicada">Queja Duplicada</mat-radio-button>
+        <mat-radio-button value="irrelevante">Irrelevante para San Juan de Miraflores</mat-radio-button>
+        <mat-radio-button value="violencia">Contenido Violento</mat-radio-button>
+  <mat-radio-button value="spam">Spam o Publicidad no deseada</mat-radio-button>
+  <mat-radio-button value="sinFundamento">Queja sin Fundamento</mat-radio-button>
+      </mat-radio-group>
+</div>
+
+<div>
+  <!-- Agrega un área de texto para proporcionar detalles adicionales si es necesario -->
+</div>
+
+<div>
+  <button mat-button (click)="cerrarModal()">Cancelar</button>
+  <button mat-button color="warn" (click)="reportarQueja()">Reportar</button>
+</div>
