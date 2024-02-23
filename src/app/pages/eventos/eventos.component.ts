@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { PageEvent } from '@angular/material/paginator';
 import { AgregarEventoComponent } from 'src/app/modal-pages/agregar-evento/agregar-evento.component';
 import { MatDialog } from '@angular/material/dialog';
+import { EditarEventoComponent } from 'src/app/modal-pages/editar-evento/editar-evento.component';
 
 @Component({
   selector: 'app-eventos',
@@ -214,6 +215,19 @@ export class EventosComponent implements OnInit {
     // Cierra el modal
     this.modalAbierto = false;
     
+  }
+
+  editarEvento(eventoId: number): void {
+    const evento = this.eventos.find(e => e.id === eventoId);
+    const dialogRef = this.dialog.open(EditarEventoComponent, {
+      width: '900px',
+      data: evento // Pasa el evento como dato al modal de edición
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal de edición de evento se cerró');
+      this.cargarEventos(); // Recarga los eventos después de cerrar el modal de edición
+    });
   }
 
   eliminarEvento(eventoId: number): void {

@@ -6,11 +6,16 @@ import { Queja } from '../model/Queja';
   providedIn: 'root'
 })
 export class QuejaService {
-  private apiUrl = 'http://localhost:8080/quejas/listar'; // Ajusta la URL según tu backend
+  private apiUrl = 'http://localhost:8080/quejas'; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) { }
 
   obtenerQuejas(): Observable<Queja[]> {
-    return this.http.get<Queja[]>(this.apiUrl);
+    return this.http.get<Queja[]>(this.apiUrl + '/listar');
   }
+
+  agregarQueja(queja: Queja): Observable<Queja> {
+    return this.http.post<Queja>(this.apiUrl + '/guardar', queja);
+  }
+  
 }

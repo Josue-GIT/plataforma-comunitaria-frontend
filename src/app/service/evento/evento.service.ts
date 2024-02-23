@@ -24,4 +24,8 @@ export class EventoService {
   eliminarEvento(eventoId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/eliminar/${eventoId}`);
   }
+
+  editarEvento(eventoId: number, evento: EventoRequest): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/editar/${eventoId}`, evento);
+  }
 }

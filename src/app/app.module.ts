@@ -28,7 +28,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { AgregarEventoComponent } from './modal-pages/agregar-evento/agregar-evento.component';
-
+import { EditarEventoComponent } from './modal-pages/editar-evento/editar-evento.component';
+import { AgregarQuejaComponent } from './modal-pages/agregar-queja/agregar-queja.component';
+import { ReportarQuejaComponent } from './modal-pages/reportar-queja/reportar-queja.component';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +47,10 @@ import { AgregarEventoComponent } from './modal-pages/agregar-evento/agregar-eve
     PerfilComponent,
     EventoModalComponent,
     AgregarEventoComponent,
+    EditarEventoComponent,
+    AgregarQuejaComponent,
+    ReportarQuejaComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -62,7 +69,8 @@ import { AgregarEventoComponent } from './modal-pages/agregar-evento/agregar-eve
     MatExpansionModule,
     MatIconModule, 
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

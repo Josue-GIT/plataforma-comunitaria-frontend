@@ -1,12 +1,27 @@
 <br><br><br>
 <div class="container mt-5">
+  <div class="container mt-5">
+    <!-- Botón para agregar evento (exclusivo para admin) -->
+    <div class="bg-light p-3 rounded d-flex align-items-center justify-content-between" *ngIf="loggedInUserId">
+      <div>
+        <!-- Imagen a la izquierda -->
+        <img src="../../../assets/img/avatarEvento.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">
+      </div>
+      <div class="ml-4"> <!-- Ajusta el margen izquierdo del texto a la derecha -->
+        <!-- Texto a la derecha -->
+        <h1><strong>¿Quieres agregar una queja?</strong></h1>
+        <p>Informa sobre cualquier problema o situación que requiera la atención de la municipalidad. Ya sea un bache en la calle, un problema de iluminación en tu barrio, o cualquier otra preocupación relacionada con los servicios municipales, estamos aquí para ayudarte. Tu contribución es fundamental para mantener nuestra comunidad segura y en funcionamiento.</p> <!-- Botón para agregar evento -->
+        <button mat-raised-button color="accent" (click)="abrirModalAgregarQueja()">Realizar Queja</button>
+      </div>
+    </div>
+  </div>
     <mat-toolbar color="primary">
       <span>Lista de Quejas</span>
     </mat-toolbar>
   
-    <div *ngIf="quejas && quejas.length > 0" class="mt-4">
+    <div *ngIf="quejasPaginadas && quejasPaginadas.length > 0" class="mt-4">
       <div class="row">
-        <div *ngFor="let queja of quejas" class="col-md-4 mb-4" [@fadeInOut]>
+        <div *ngFor="let queja of quejasPaginadas" class="col-md-4 mb-4" [@fadeInOut]>
           <mat-card [ngClass]="{'card-resolved': queja.estado === 'resuelto', 'card-pending': queja.estado === 'pendiente', 'card-other': queja.estado !== 'resuelto' && queja.estado !== 'pendiente'}">
             <mat-card-header>
               <mat-card-title>{{ queja.titulo }}</mat-card-title>
@@ -20,9 +35,9 @@
               <p><strong>Descripción:</strong> {{ queja.descripcion }}</p>
               <p><strong>Estado: </strong> {{queja.estado}}</p>
               <mat-card-actions>
-                <button mat-raised-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">
-                  Abrir Google Maps
-                </button>
+                
+                <button mat-raised-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">Abrir Google Maps</button>
+                <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="abrirModalReportarQueja()">Reportar Queja</button>
               </mat-card-actions>
             </mat-card-content>
           </mat-card>
@@ -33,5 +48,6 @@
     <div *ngIf="!quejas|| quejas.length === 0" class="mt-4">
       <p class="alert alert-info">No se muestran las quejas en este momento.</p>
     </div>
+    <mat-paginator [length]="quejas.length" [pageSize]="6" (page)="onPaginateChange($event)"></mat-paginator>
 </div>
 
