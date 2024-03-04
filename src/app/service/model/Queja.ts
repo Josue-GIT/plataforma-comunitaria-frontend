@@ -8,5 +8,15 @@ export interface Queja{
     ubicacion: string;
     descripcion: string;
     fechaReporte: string;
-    estado: string;    
+    estado: string; 
+    reportes : ReporteQueja[];
   }
+
+  export interface ReporteQueja {
+    id: number;
+    queja: Queja;
+    usuario: Usuario;
+    fechaReporte: string;
+    mensaje:  string;
+  }
+  

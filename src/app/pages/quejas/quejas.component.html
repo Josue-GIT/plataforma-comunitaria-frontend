@@ -19,7 +19,7 @@
       <span>Lista de Quejas</span>
     </mat-toolbar>
   
-    <div *ngIf="quejasPaginadas && quejasPaginadas.length > 0" class="mt-4">
+    <div *ngIf="quejas && quejas.length > 0" class="mt-4">
       <div class="row">
         <div *ngFor="let queja of quejasPaginadas" class="col-md-4 mb-4" [@fadeInOut]>
           <mat-card [ngClass]="{'card-resolved': queja.estado === 'resuelto', 'card-pending': queja.estado === 'pendiente', 'card-other': queja.estado !== 'resuelto' && queja.estado !== 'pendiente'}">
@@ -34,10 +34,19 @@
               <p><strong>Ubicación:</strong> {{ queja.ubicacion }}</p>
               <p><strong>Descripción:</strong> {{ queja.descripcion }}</p>
               <p><strong>Estado: </strong> {{queja.estado}}</p>
+              <p><strong>Participantes:</strong>
+                <span *ngIf="queja.reportes && queja.reportes.length > 0">
+                  {{ formatReportes(queja.reportes) }}
+                </span>
+                <span *ngIf="!queja.reportes || queja.reportes.length === 0">Ninguno</span>
+              </p>
               <mat-card-actions>
                 
                 <button mat-raised-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">Abrir Google Maps</button>
-                <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="abrirModalReportarQueja()">Reportar Queja</button>
+                <mat-card-actions class="d-flex justify-content-between" *ngIf="loggedInUserId">
+                  <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="!usuarioReportadoQueja(queja)"  (click)="abrirModalReportarQueja(queja.id)">Reportar Queja</button>
+                  <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="usuarioReportadoQueja(queja)">Queja Reportada</button>
+                </mat-card-actions>
               </mat-card-actions>
             </mat-card-content>
           </mat-card>

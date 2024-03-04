@@ -8,6 +8,7 @@ import { AgregarQuejaComponent } from 'src/app/modal-pages/agregar-queja/agregar
 import { ReportarQuejaComponent } from 'src/app/modal-pages/reportar-queja/reportar-queja.component';
 import { Queja } from 'src/app/service/model/Queja';
 import { QuejaService } from 'src/app/service/queja/queja.service';
+import { ReportarQuejaService } from 'src/app/service/reportarQueja/reportar-queja.service';
 
 @Component({
   selector: 'app-quejas',
@@ -30,14 +31,17 @@ export class QuejasComponent {
   quejasPaginadas: Queja[] = [];
   currentPageIndex: number = 0;
   loggedInUserId: number | null = null;
+  quejaSeleccionadaId: number | null = null;
 
   constructor(private quejaService: QuejaService,
+    private reportarQuejaService : ReportarQuejaService,
     public dialog: MatDialog,
     private authService:AuthService) { }
 
   ngOnInit(): void {
     this.loggedInUserId = this.authService.getLoggedInUserId();
     this.cargarQuejas();
+    this.verificarQuejasReportadas();
   }
   abrirModalAgregarQueja(): void {
     const dialogRef = this.dialog.open(AgregarQuejaComponent, {
@@ -49,15 +53,42 @@ export class QuejasComponent {
       this.cargarQuejas();
     });
   }
+
+  formatReportes(reportes: any[]): string {
+    return reportes.map(reporte => reporte.usuario.nombre).join(', ');
+  }
+
+  verificarQuejasReportadas(): void {
+    this.quejas.forEach(queja => {
+      this.reportarQuejaService.obtenerReporteQueja(queja.id).subscribe(
+        (reportes: any[]) => {
+          queja.reportes = reportes;
+        },
+        (error) => {
+          console.error('Error al verificar el reporte de la queja:', error);
+        }
+      );
+    });
+  }
   
-  abrirModalReportarQueja(): void {
+  usuarioReportadoQueja(queja: Queja): boolean {
+    if (!queja.reportes || queja.reportes.length === 0) {
+      return false; // Si no hay reportes, el usuario no ha reportado esta queja
+    }
+    // Verificar si el usuario actual ha reportado esta queja
+    return queja.reportes.some(reporte => reporte.usuario.id === this.loggedInUserId);
+  }
+
+  abrirModalReportarQueja(quejaId: number): void {
+    console.log('ID de la queja seleccionada:', quejaId); 
     const dialogRef = this.dialog.open(ReportarQuejaComponent, {
       width: '400px', // Ancho del modal
-      data: {} // Puedes pasar datos adicionales al modal si es necesario
+      data: { quejaId : quejaId} // Puedes pasar datos adicionales al modal si es necesario
     });
   
     dialogRef.afterClosed().subscribe(result => {
       console.log('El modal de reportar queja se cerró');
+      this.cargarQuejas();
       // Aquí puedes realizar acciones adicionales después de que se cierre el modal
     });
   }
@@ -67,6 +98,7 @@ export class QuejasComponent {
       (data: Queja[]) => {
         this.quejas = data;
         this.actualizarQuejasPaginadas();
+        this.verificarQuejasReportadas()
       },
       (error) => {
         console.error('Error al obtener quejas:', error);

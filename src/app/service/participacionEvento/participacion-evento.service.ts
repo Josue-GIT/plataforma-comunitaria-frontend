@@ -16,6 +16,8 @@ export class ParticipacionEventoService {
     return this.http.get<Evento[]>(url);
   }
 
+  
+
   obtenerParticipantesDelEvento(eventoId: number): Observable<any[]> {
     const url = `${this.baseUrl}/evento/${eventoId}`;
     return this.http.get<any[]>(url);
