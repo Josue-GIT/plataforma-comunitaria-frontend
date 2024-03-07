@@ -1,0 +1,29 @@
+<br><br><br><br><br>
+
+<div class="container">
+  <div *ngFor="let reporte of reportesQueja" class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4 reporte-info text-white" style="background-color: #3f51b5">
+        <div class="card-body">
+          <h5 class="card-title">Reporte id: {{ reporte.id }}</h5>
+          <p class="card-text">Fecha de Reporte: {{ reporte.fechaReporte }}</p>
+          <p class="card-text">Mensaje: {{ reporte.mensaje }}</p>
+          <p class="card-text">Usuario que reportó: {{ reporte.usuario.username }}</p>
+        </div>
+        <button mat-raised-button class="text-dark" style="margin-right: 8px; margin-bottom: 10px; background-color: #ffc107;">Vetar Usuario</button>
+        <button mat-raised-button class="text-light" style="margin-bottom: 10px; background-color: #dc3545;">Eliminar queja</button>
+      </div>
+      <div class="col-md-4 queja-info bg-light">
+        <div class="card-body">
+          <p class="card-text">Detalles de la Queja:</p>
+          <p class="card-text">Título: {{ reporte.quejaProblema.titulo }}</p>
+          <p class="card-text">Ubicación: {{ reporte.quejaProblema.ubicacion }}</p>
+          <p class="card-text">Descripción: {{ reporte.quejaProblema.descripcion }}</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <img [src]="reporte.quejaProblema.url || 'https://via.placeholder.com/300'" alt="Imagen del evento" class="card-img" style="border-radius: 5px; margin-top: 5px;">
+      </div>
+    </div>
+  </div>
+</div>

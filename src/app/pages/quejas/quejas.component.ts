@@ -60,7 +60,7 @@ export class QuejasComponent {
 
   verificarQuejasReportadas(): void {
     this.quejas.forEach(queja => {
-      this.reportarQuejaService.obtenerReporteQueja(queja.id).subscribe(
+      this.reportarQuejaService.obtenerReporteQuejaPorIdQueja(queja.id).subscribe(
         (reportes: any[]) => {
           queja.reportes = reportes;
         },
