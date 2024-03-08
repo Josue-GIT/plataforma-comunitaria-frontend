@@ -1,6 +1,7 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Proyecto } from 'src/app/service/model/Proyecto';
 import { ProyectoService } from 'src/app/service/proyecto/proyecto.service';
 
@@ -22,11 +23,17 @@ import { ProyectoService } from 'src/app/service/proyecto/proyecto.service';
 })
 export class ProyectosComponent {
   proyectos: Proyecto[] = [];
-
-  constructor(private proyectoService: ProyectoService) { }
+  loggedInUserId: number | null = null;
+  userRole: string | null = null;
+  constructor(private proyectoService: ProyectoService,
+              private authService : AuthService) { }
 
   ngOnInit(): void {
     this.cargarQuejas();
+    this.loggedInUserId = this.authService.getLoggedInUserId();
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role;
+    });
   }
 
   cargarQuejas(): void {
@@ -44,5 +51,9 @@ export class ProyectosComponent {
     const googleMapsUrl = `https://www.google.com/maps?q=${encodeURIComponent(ubicacion)}`;
     window.open(googleMapsUrl, '_blank');
 
+  }
+
+  isAdmin(): boolean {
+    return this.userRole === 'ADMIN';
   }
 }

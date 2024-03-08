@@ -32,6 +32,8 @@ import { EditarEventoComponent } from './modal-pages/editar-evento/editar-evento
 import { AgregarQuejaComponent } from './modal-pages/agregar-queja/agregar-queja.component';
 import { ReportarQuejaComponent } from './modal-pages/reportar-queja/reportar-queja.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { ReportesQuejaComponent } from './pages/reportes-queja/reportes-queja.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,7 @@ import {MatRadioModule} from '@angular/material/radio';
     EditarEventoComponent,
     AgregarQuejaComponent,
     ReportarQuejaComponent,
-
+    ReportesQuejaComponent
   ],
   imports: [
     BrowserModule,

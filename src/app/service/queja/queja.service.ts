@@ -18,4 +18,7 @@ export class QuejaService {
     return this.http.post<Queja>(this.apiUrl + '/guardar', queja);
   }
   
+  eliminarQueja(quejaId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/eliminar/${quejaId}`);
+  }
 }

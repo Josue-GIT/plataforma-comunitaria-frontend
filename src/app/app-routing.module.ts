@@ -8,6 +8,7 @@ import { QuejasComponent } from './pages/quejas/quejas.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ReportesQuejaComponent } from './pages/reportes-queja/reportes-queja.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'reportes-queja', component: ReportesQuejaComponent },
   { path: '**', redirectTo: 'home' }
 ];
 

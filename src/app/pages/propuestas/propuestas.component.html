@@ -1,7 +1,17 @@
 <br><br><br>
-usar modal para el registro
-<p>Usuario en sesión: {{ loggedInUserId }}</p>
-<div class="container">
+
+<div class="container mt-5">
+    <div *ngIf="isAdmin()" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+        <div style="margin-right: 10px;">
+          <img src="../../../assets/img/agregarpropuesta.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">
+        </div>
+        <div class="ml-4">
+          <h1><strong>¿Quieres agregar una propuesta?</strong></h1>
+          <p style="margin-right: 100px;">Comparte tus ideas y haz propuestas para mejorar nuestra comunidad. Desde iniciativas sociales hasta mejoras en infraestructuras locales, ¡tu propuesta puede marcar la diferencia! Tu opinión cuenta. Únete a nosotros para construir un futuro mejor juntos.</p>
+          <button mat-raised-button color="accent">Agregar propuesta</button>
+        </div>
+      </div>
+
     <mat-toolbar color="primary">
         <span>Propuestas de la comunidad</span>
       </mat-toolbar>

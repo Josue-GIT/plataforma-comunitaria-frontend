@@ -21,7 +21,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   ]
 })
 export class NavbarComponent {
-  
+  userRole: string | null = null;
   isLoggedIn!: Observable<boolean>;
 
   constructor(private authService: AuthService,
@@ -31,12 +31,17 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role;
+    });
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
-  
+  isAdmin(): boolean {
+    return this.userRole === 'ADMIN';
+  }
 }
 

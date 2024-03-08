@@ -14,8 +14,8 @@
   export class PropuestasComponent implements OnInit {
     propuestas: Propuesta[] = [];
     loggedInUserId: number | null = null;
-  typeof: any;
-    
+    typeof: any;
+    userRole: string | null = null;
     constructor(
       private propuestaService: PropuestaService,
       private votosPropuestaService: VotosPropuestaService,
@@ -23,7 +23,7 @@
       iconRegistry: MatIconRegistry,
       sanitizer: DomSanitizer
     ) {
-      // Registro de iconos en el constructor
+
       iconRegistry.addSvgIcon('thumbs-up', sanitizer.bypassSecurityTrustResourceUrl('assets/thumbs-up.svg'));
       iconRegistry.addSvgIcon('thumbs-down', sanitizer.bypassSecurityTrustResourceUrl('assets/thumbs-down.svg'));
     }
@@ -31,6 +31,9 @@
     ngOnInit() {
       this.cargarPropuestas();
       this.loggedInUserId = this.authService.getLoggedInUserId();
+      this.authService.getUserRole().subscribe(role => {
+        this.userRole = role;
+      });
     }
     votarPositivo(idPropuesta: number) {
       this.votosPropuestaService.votarPropuestaPositivo(idPropuesta, this.loggedInUserId ?? 0).subscribe(
@@ -42,7 +45,10 @@
         }
       );
     }
-  
+    isAdmin(): boolean {
+      return this.userRole === 'ADMIN';
+    }
+
     cancelarVotoPositivo(idPropuesta: number) {
       this.votosPropuestaService.cancelarVotoPositivo(idPropuesta, this.loggedInUserId ?? 0).subscribe(
         (response) => {
@@ -62,10 +68,8 @@
       event.stopPropagation();  
 
       if (propuesta.votos && typeof propuesta.votos === 'object') {
-        // Se ha votado positivamente, cancelar voto
         this.cancelarVotoPositivo(propuesta.id);
       } else {
-        // No se ha votado positivamente, votar positivamente
         this.votarPositivo(propuesta.id);
       }
     }
@@ -73,12 +77,11 @@
     cargarPropuestas() {
       this.propuestaService.obtenerPropuestas().subscribe((propuestas) => {
         this.propuestas = propuestas;
-    
-        // Ahora, para cada propuesta, obtenemos los votos positivos utilizando el servicio de votosPropuesta
+
         this.propuestas.forEach((propuesta) => {
           this.votosPropuestaService.obtenerVotosPositivosPorPropuesta(propuesta.id).subscribe(
             (cantidadVotosPositivos) => {
-              propuesta.votos = cantidadVotosPositivos;  // Actualiza la propiedad 'votos' de la propuesta
+              propuesta.votos = cantidadVotosPositivos;  
             },
             (error) => {
               console.error(`Error al obtener la cantidad de votos positivos para la propuesta ${propuesta.id}`, error);

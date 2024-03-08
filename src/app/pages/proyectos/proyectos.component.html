@@ -1,5 +1,18 @@
 <br><br><br>
 <div class="container mt-5">
+    <div *ngIf="isAdmin()" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+      <div>
+        <!-- Imagen a la izquierda -->
+        <img src="../../../assets/img/obrero.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">
+      </div>
+      <div class="ml-4"> <!-- Ajusta el margen izquierdo del texto a la derecha -->
+        <!-- Texto a la derecha -->
+        <h2 class="text-muted">Exclusivo para el Administrador</h2>
+        <h1><strong>¿Quieres agregar un proyecto?</strong></h1>
+        <p style="margin-right: 100px;">Aquí tienes la oportunidad de presentar tus proyectos para contribuir al crecimiento y bienestar de nuestra comunidad. Desde iniciativas sociales hasta mejoras en infraestructuras locales, ¡tu propuesta puede marcar la diferencia! Comparte tu visión y trabaja junto a nosotros para hacerla realidad.</p>
+        <button mat-raised-button color="accent">Agregar proyecto</button>
+      </div>
+    </div>
     <mat-toolbar color="primary">
       <span>Lista de Proyectos</span>
     </mat-toolbar>

@@ -1,6 +1,7 @@
 <br><br><br><br><br>
 
 <div class="container">
+  <h1 class="text-center" style="color:#e34247; margin-bottom: 60px; margin-top: 30px; font-size: 40px;"><b>Listado de los Reportes de las Quejas</b></h1>
   <div *ngFor="let reporte of reportesQueja" class="card mb-3">
     <div class="row no-gutters">
       <div class="col-md-4 reporte-info text-white" style="background-color: #3f51b5">
@@ -10,12 +11,14 @@
           <p class="card-text">Mensaje: {{ reporte.mensaje }}</p>
           <p class="card-text">Usuario que reportó: {{ reporte.usuario.username }}</p>
         </div>
-        <button mat-raised-button class="text-dark" style="margin-right: 8px; margin-bottom: 10px; background-color: #ffc107;">Vetar Usuario</button>
-        <button mat-raised-button class="text-light" style="margin-bottom: 10px; background-color: #dc3545;">Eliminar queja</button>
+        <button *ngIf="!reporte.quejaProblema.usuario.vetado" mat-raised-button class="text-dark" (click)="vetarUsuario(reporte.quejaProblema.usuario.id)" style="margin-right: 8px; margin-bottom: 10px; background-color: #ffc107;">Vetar Usuario</button>
+<button *ngIf="reporte.quejaProblema.usuario.vetado" mat-raised-button class="text-light" (click)="quitarVetoUsuario(reporte.quejaProblema.usuario.id)" style="margin-right: 8px; margin-bottom: 10px; background-color: #17a2b8">Quitar Veto</button>
+        <button mat-raised-button class="text-light" (click)="eliminarQueja(reporte.quejaProblema.id)" style="margin-bottom: 10px; background-color: #dc3545;">Eliminar queja</button>
       </div>
       <div class="col-md-4 queja-info bg-light">
         <div class="card-body">
-          <p class="card-text">Detalles de la Queja:</p>
+          <strong><p class="card-text">Queja reportada</p></strong>
+          <br>
           <p class="card-text">Título: {{ reporte.quejaProblema.titulo }}</p>
           <p class="card-text">Ubicación: {{ reporte.quejaProblema.ubicacion }}</p>
           <p class="card-text">Descripción: {{ reporte.quejaProblema.descripcion }}</p>

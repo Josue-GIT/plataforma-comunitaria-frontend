@@ -14,7 +14,7 @@ export interface Queja{
 
   export interface ReporteQueja {
     id: number;
-    queja: Queja;
+    quejaProblema: Queja;
     usuario: Usuario;
     fechaReporte: string;
     mensaje:  string;
