@@ -7,6 +7,7 @@ export interface Evento {
     descripcion: string;
     fechaHora: string;
     ubicacion: string;
+    img: string;
     participantes: ParticipacionEvento[];
   }
   

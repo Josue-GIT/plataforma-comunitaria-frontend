@@ -7,8 +7,7 @@
         <p>{{ item.evento.descripcion }}</p>
         <p>Fecha y Hora: {{ item.evento.fechaHora }}</p>
         <p>Ubicación: {{ item.evento.ubicacion }}</p>
-        <img [src]="item.evento.url || 'https://via.placeholder.com/300'" alt="Imagen del evento" style="width: 300px; height: 200px; border-radius: 5px; margin-left: 25px;">
-        
+        <img mat-card-image [src]="dataToImage(item.evento.img) || 'https://via.placeholder.com/300'" alt="Imagen del evento" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
         <button mat-raised-button color="warn" style="margin-top: 20px ; margin-right: 8px;" (click)="cancelarParticipacion(item.evento)">Cancelar Evento</button>
         <button mat-raised-button color="accent" style="margin-top: 20px ;" (click)="abrirGoogleMaps(item.evento.ubicacion)">Abrir en Google Maps</button>
       </div>

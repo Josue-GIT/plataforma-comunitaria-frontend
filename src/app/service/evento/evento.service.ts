@@ -17,7 +17,7 @@ export class EventoService {
     return this.http.get<Evento[]>(`${this.apiUrl}/listar`);
   }
   
-  registrarEvento(evento: EventoRequest): Observable<any> {
+  registrarEvento(evento: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/guardar`, evento);
   }
 

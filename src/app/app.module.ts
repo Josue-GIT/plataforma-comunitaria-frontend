@@ -25,12 +25,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { EventoModalComponent } from './modal-pages/evento-modal/evento-modal.component';
+import { EventoModalComponent } from './modal-pages/parte-evento/evento-modal/evento-modal.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { AgregarEventoComponent } from './modal-pages/agregar-evento/agregar-evento.component';
-import { EditarEventoComponent } from './modal-pages/editar-evento/editar-evento.component';
-import { AgregarQuejaComponent } from './modal-pages/agregar-queja/agregar-queja.component';
-import { ReportarQuejaComponent } from './modal-pages/reportar-queja/reportar-queja.component';
+import { AgregarEventoComponent } from './modal-pages/parte-evento/agregar-evento/agregar-evento.component';
+import { EditarEventoComponent } from './modal-pages/parte-evento/editar-evento/editar-evento.component';
+import { AgregarQuejaComponent } from './modal-pages/parte-queja/agregar-queja/agregar-queja.component';
+import { ReportarQuejaComponent } from './modal-pages/parte-queja/reportar-queja/reportar-queja.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { ReportesQuejaComponent } from './pages/reportes-queja/reportes-queja.component';
 

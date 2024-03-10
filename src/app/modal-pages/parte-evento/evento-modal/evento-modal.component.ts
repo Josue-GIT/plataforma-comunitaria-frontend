@@ -5,6 +5,7 @@ import { Evento, ParticipacionEvento } from 'src/app/service/model/Evento';
 import { ParticipacionEventoService } from 'src/app/service/participacionEvento/participacion-evento.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-evento-modal',
@@ -29,6 +30,7 @@ export class EventoModalComponent implements OnInit{
   eventosUsuario: ParticipacionEvento[] = [];
   constructor(private authService: AuthService,
     private participacionEventoService: ParticipacionEventoService,
+    private sanitizer:DomSanitizer,
     public dialogRef: MatDialogRef<EventoModalComponent>) { }
   
   
@@ -40,6 +42,10 @@ export class EventoModalComponent implements OnInit{
     this.cargarEventosUsuario();
   }
 
+  dataToImage(dataURI: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + dataURI);
+  }
+  
   cargarEventosUsuario(): void {
     if (this.loggedInUserId) {
       this.participacionEventoService.obtenerEventosUsuario(this.loggedInUserId).subscribe(

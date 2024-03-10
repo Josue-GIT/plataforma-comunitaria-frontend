@@ -7,9 +7,9 @@ import { ParticipacionEventoService } from 'src/app/service/participacionEvento/
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import Swal from 'sweetalert2';
 import { PageEvent } from '@angular/material/paginator';
-import { AgregarEventoComponent } from 'src/app/modal-pages/agregar-evento/agregar-evento.component';
+import { AgregarEventoComponent } from 'src/app/modal-pages/parte-evento/agregar-evento/agregar-evento.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditarEventoComponent } from 'src/app/modal-pages/editar-evento/editar-evento.component';
+import { EditarEventoComponent } from 'src/app/modal-pages/parte-evento/editar-evento/editar-evento.component';
 
 @Component({
   selector: 'app-eventos',
@@ -49,6 +49,7 @@ export class EventosComponent implements OnInit {
 
 
   constructor(private eventoService: EventoService,
+    private sanitizer: DomSanitizer,
     private authService: AuthService,
     private participacionEventoService: ParticipacionEventoService,
     private dialog: MatDialog) { }
@@ -71,7 +72,11 @@ export class EventosComponent implements OnInit {
       );
     }
 
-  cargarEventos(): void {
+    dataToImage(dataURI: string): SafeUrl {
+      return this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + dataURI);
+    }
+
+    cargarEventos(): void {
     this.eventoService.obtenerEventos().subscribe(
       (data: Evento[]) => {
         this.eventos = data;

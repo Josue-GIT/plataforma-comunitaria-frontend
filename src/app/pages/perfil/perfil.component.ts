@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { EventoModalComponent } from 'src/app/modal-pages/evento-modal/evento-modal.component';
+import { EventoModalComponent } from 'src/app/modal-pages/parte-evento/evento-modal/evento-modal.component';
 EventoModalComponent
 import { Usuario } from 'src/app/service/model/Usuario';
 import { PerfilService } from 'src/app/service/perfil/perfil.service';
