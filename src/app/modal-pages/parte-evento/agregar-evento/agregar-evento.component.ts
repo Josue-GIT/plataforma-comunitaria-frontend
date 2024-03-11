@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventoService } from 'src/app/service/evento/evento.service';
 import Swal from 'sweetalert2';
-import { EventoRequest } from 'src/app/service/evento/EventoRequest';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -18,7 +17,6 @@ export class AgregarEventoComponent implements OnInit {
   archivoBase64: string | null = null;
 
   constructor(private formBuilder: FormBuilder,
-    private router: Router, 
     private eventoService: EventoService,
     public dialogRef: MatDialogRef<AgregarEventoComponent>) { 
     this.registroForm = this.formBuilder.group({

@@ -8,7 +8,7 @@
         <div class="ml-4">
           <h1><strong>¿Quieres agregar una propuesta?</strong></h1>
           <p style="margin-right: 100px;">Comparte tus ideas y haz propuestas para mejorar nuestra comunidad. Desde iniciativas sociales hasta mejoras en infraestructuras locales, ¡tu propuesta puede marcar la diferencia! Tu opinión cuenta. Únete a nosotros para construir un futuro mejor juntos.</p>
-          <button mat-raised-button color="accent">Agregar propuesta</button>
+          <button mat-raised-button color="accent" (click)="registrarPropuesta()">Agregar propuesta</button>
         </div>
       </div>
 
@@ -29,13 +29,15 @@
             <span style="margin-right: 20px; margin-top: 10px;">{{ esObjeto(propuesta.votos) ? propuesta.votos.cantidadVotosPositivos : propuesta.votos || 0 }}</span>
             
             <span style="margin-top: 10px;">{{ propuesta.titulo }}</span>
-            
+            <button *ngIf="isAdmin()" (click)="eliminarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 15px; background-color: #de271b; color: white;" >Eliminar propuesta</button>
+            <button *ngIf="isAdmin()" (click)="editarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 5px;" >Editar propuesta</button>
             </mat-expansion-panel-header>
         
             <div>
-            <p>{{ propuesta.descripcion }}</p>
-            <div style="display: flex; justify-content: center;">
-                <img mat-card-image [src]="propuesta.url || 'https://via.placeholder.com/300'" alt="Imagen de la propuesta" style="width: 800px;">
+              <p><strong>Descripción:</strong>{{ propuesta.descripcion }}</p>
+              <p><strong>Ubicación:</strong> {{propuesta.ubicacion}}</p>
+              <div style="display: flex; justify-content: center;">
+                <img mat-card-image [src]="dataToImage(propuesta.img) || 'https://via.placeholder.com/300'" alt="Imagen de la propuesta" style="width: 500px;">
               </div>
             </div>
         </mat-expansion-panel>

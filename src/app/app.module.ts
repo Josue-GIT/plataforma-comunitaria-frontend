@@ -33,6 +33,8 @@ import { AgregarQuejaComponent } from './modal-pages/parte-queja/agregar-queja/a
 import { ReportarQuejaComponent } from './modal-pages/parte-queja/reportar-queja/reportar-queja.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { ReportesQuejaComponent } from './pages/reportes-queja/reportes-queja.component';
+import { AgregarPropuestaComponent } from './modal-pages/parte-propuesta/agregar-propuesta/agregar-propuesta.component';
+import { EditarPropuestaComponent } from './modal-pages/parte-propuesta/editar-propuesta/editar-propuesta.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ReportesQuejaComponent } from './pages/reportes-queja/reportes-queja.co
     EditarEventoComponent,
     AgregarQuejaComponent,
     ReportarQuejaComponent,
-    ReportesQuejaComponent
+    ReportesQuejaComponent,
+    AgregarPropuestaComponent,
+    EditarPropuestaComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Evento } from '../model/Evento';
-import { EventoRequest } from './EventoRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +20,11 @@ export class EventoService {
     return this.http.post<any>(`${this.apiUrl}/guardar`, evento);
   }
 
+  editarEvento(eventoId: number, evento: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/editar/${eventoId}`, evento);
+  }
+  
   eliminarEvento(eventoId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/eliminar/${eventoId}`);
-  }
-
-  editarEvento(eventoId: number, evento: EventoRequest): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/editar/${eventoId}`, evento);
   }
 }
