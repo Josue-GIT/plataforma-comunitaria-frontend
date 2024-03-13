@@ -12,74 +12,78 @@ import Swal from 'sweetalert2';
   styleUrls: ['./agregar-queja.component.css']
 })
 export class AgregarQuejaComponent implements OnInit{
-  quejaForm: FormGroup;
   registroError: string = "";
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private quejaService: QuejaService,
+  registroForm: FormGroup;
+  archivoBase64: string | null = null;
+  loggedInUserId: number | null = null;
+  
+  constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
-    public dialogRef: MatDialogRef<AgregarQuejaComponent>
-  ) {
-    this.quejaForm = this.formBuilder.group({
+    private quejaService: QuejaService,
+    public dialogRef: MatDialogRef<AgregarQuejaComponent>) { 
+    this.registroForm = this.formBuilder.group({
       titulo: ['', Validators.required],
-      url: ['', Validators.required],
       descripcion: ['', Validators.required],
       ubicacion: ['', Validators.required],
-      usuarioId: [null] // Aquí almacenaremos el ID del usuario que presenta la queja
+      estado:['por aprobar', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    // Obtenemos el ID del usuario actualmente autenticado
-    const loggedInUserId = this.authService.getLoggedInUserId();
-    if (loggedInUserId) {
-      // Si se encuentra un ID de usuario válido, lo establecemos en el formulario
-      this.quejaForm.patchValue({ usuarioId: loggedInUserId });
-    }
+    this.loggedInUserId = this.authService.getLoggedInUserId();
   }
 
-  agregarQueja(): void {
-    if (this.quejaForm.valid) {
-      const quejaData = this.quejaForm.value;
-      quejaData.estado = 'por aprobar';
-  
-      const loggedInUserId = this.authService.getLoggedInUserId();
-      if (loggedInUserId) {
-        quejaData.usuario = { id: loggedInUserId }; // Agregar el ID del usuario a los datos de la queja
-      }
-  
-      // Agregar la fecha de reporte actual
-      quejaData.fechaReporte = new Date().toISOString();
-  
-      this.quejaService.agregarQueja(quejaData).subscribe(
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String: string = reader.result as string;
+        this.archivoBase64 = base64String.split(',')[1];
+        console.log(this.archivoBase64);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+    
+  registrarQueja(): void {
+    if (this.registroForm.valid && this.archivoBase64) {
+      const quejaData = new FormData();
+      quejaData.append('titulo', this.registroForm.get('titulo')?.value);
+      quejaData.append('descripcion', this.registroForm.get('descripcion')?.value);
+      quejaData.append('ubicacion', this.registroForm.get('ubicacion')?.value);
+      quejaData.append('img', this.archivoBase64);
+      quejaData.append('usuarioId', String(this.loggedInUserId));
+      quejaData.append('estado', this.registroForm.get('estado')?.value);
+      quejaData.append('fechaReporte', new Date().toISOString())
+      this.quejaService.registrarQueja(quejaData).subscribe(
         (response: any) => {
           Swal.fire({
             icon: 'success',
-            title: '¡Queja agregada correctamente!',
+            title: '¡Queja registrada exitosamente!',
             showConfirmButton: false,
             timer: 1500
           }).then(() => {
             this.dialogRef.close(true);
+            this.cerrarModal();
           });
         },
         (error: any) => {
           Swal.fire({
             icon: 'error',
-            title: 'Error al agregar la queja',
-            text: 'Hubo un problema al procesar la queja. Por favor, inténtalo de nuevo más tarde.',
+            title: 'Error al registrar la queja',
+            text: 'Hubo un problema al registrar la queja. Por favor, inténtalo de nuevo más tarde.',
             confirmButtonText: 'Cerrar'
           });
-          console.error('Error al agregar la queja:', error);
+          console.error('Error al registrar la queja:', error);
         }
       );
     } else {
-      this.quejaForm.markAllAsTouched();
-      // Manejo de errores si el formulario no es válido
+      this.registroForm.markAllAsTouched();
+      // Manejo de errores si el formulario no es válido o la imagen no está seleccionada
     }
   }
-
   cerrarModal(): void {
-    this.dialogRef.close(false);
+    this.dialogRef.close();
   }
 }
