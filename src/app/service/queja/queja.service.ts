@@ -14,8 +14,12 @@ export class QuejaService {
     return this.http.get<Queja[]>(this.apiUrl + '/listar');
   }
 
-  agregarQueja(queja: Queja): Observable<Queja> {
-    return this.http.post<Queja>(this.apiUrl + '/guardar', queja);
+  registrarQueja(queja: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/guardar`, queja);
+  }
+
+  editarQueja(quejaId: number, queja: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/editar/${quejaId}`, queja);
   }
   
   eliminarQueja(quejaId: number): Observable<any> {

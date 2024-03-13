@@ -148,7 +148,7 @@ import Swal from 'sweetalert2';
           this.propuestaService.eliminarPropuesta(propuestaId).subscribe(
             () => {
               Swal.fire(
-                'Propuesta eliminada',
+                'Propuesta eliminadagig',
                 'La propuesta ha sido eliminado correctamente',
                 'success'
               );

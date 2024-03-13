@@ -1,0 +1,43 @@
+<h2 mat-dialog-title style="margin-bottom: 20px;">Registrar Proyecto</h2>
+  <form [formGroup]="registroForm" class="mt-5" style="margin-bottom: 72px; max-width: 2000px;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header text-center">
+                <h2 class="mb-0">Registro de Proyecto</h2>
+              </div>
+              <div class="card-body">
+                <p class="text-danger">{{ registroError }}</p>
+                <div class="mb-3">
+                  <label for="inputTitulo" class="form-label">Título:</label>
+                  <input formControlName="titulo" type="text" class="form-control" id="inputTitulo" placeholder="Título del proyecto">
+                </div>
+                <div class="mb-3">
+                  <label for="inputDescripcion" class="form-label">Descripción:</label>
+                  <textarea formControlName="descripcion" class="form-control" id="inputDescripcion" rows="3" placeholder="Descripción del proyecto"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="inputUbicacion" class="form-label">Ubicación:</label>
+                  <input formControlName="ubicacion" type="text" class="form-control" id="inputUbicacion" placeholder="Ubicación del proyecto">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Imagen:</label>
+                  <input type="file" class="form-control" (change)="onFileSelected($event)">
+                </div>
+                <br>
+                <div class="text-center">
+                  <!-- Botón para registrar el proyecto -->
+                  <button type="button" class="btn btn-primary" (click)="registrarProyecto()">Registrar Proyecto</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <div mat-dialog-actions>
+      <button mat-button color="warn" (click)="cerrarModal()">Cerrar</button>
+      <button mat-button color="primary" (click)="registrarProyecto()">Agregar Proyecto</button>
+    </div>

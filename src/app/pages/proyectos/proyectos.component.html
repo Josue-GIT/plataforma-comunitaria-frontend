@@ -10,7 +10,7 @@
         <h2 class="text-muted">Exclusivo para el Administrador</h2>
         <h1><strong>¿Quieres agregar un proyecto?</strong></h1>
         <p style="margin-right: 100px;">Aquí tienes la oportunidad de presentar tus proyectos para contribuir al crecimiento y bienestar de nuestra comunidad. Desde iniciativas sociales hasta mejoras en infraestructuras locales, ¡tu propuesta puede marcar la diferencia! Comparte tu visión y trabaja junto a nosotros para hacerla realidad.</p>
-        <button mat-raised-button color="accent">Agregar proyecto</button>
+        <button mat-raised-button color="accent" (click)="registrarProyecto()" >Agregar proyecto</button>
       </div>
     </div>
     <mat-toolbar color="primary">
@@ -23,11 +23,13 @@
           <mat-card>
             <mat-card-header>
               <mat-card-title>{{ proyecto.titulo }}</mat-card-title>
+              <button *ngIf="isAdmin()" (click)="editarProyecto(proyecto.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px;" >Editar evento</button>
             </mat-card-header>
-            <img mat-card-image [src]="proyecto.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;" >
+            <img mat-card-image [src]="dataToImage(proyecto.img) || 'https://via.placeholder.com/300'" alt="Imagen del proyecto" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
             <mat-card-content>
                 <br>
               <p><strong>Descripción:</strong> {{ proyecto.descripcion }}</p>
+              <p><strong>Ubicación:</strong> {{ proyecto.ubicacion}}</p>
               <p><strong>Estado:</strong> {{ proyecto.estado }}</p>
               <!--
               <mat-card-actions>

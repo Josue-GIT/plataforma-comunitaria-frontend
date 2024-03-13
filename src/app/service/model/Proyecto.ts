@@ -1,7 +1,8 @@
 export interface Proyecto {
     id: number;
-    url: string;
+    img: string;
     titulo: string;
     descripcion: string;
+    ubicacion: string;
     estado: string;
   }

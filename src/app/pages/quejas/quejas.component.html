@@ -26,8 +26,9 @@
             <mat-card-header>
               <mat-card-title>{{ queja.titulo }}</mat-card-title>
               <div style="margin-left: 200px;" [ngStyle]="{'color': queja.estado === 'resuelto' ? 'green' : (queja.estado === 'pendiente' ? 'red' : 'grey')}">{{ queja.estado }}</div>
+    
             </mat-card-header>
-            <img mat-card-image [src]="queja.url || 'https://via.placeholder.com/300'" alt="Imagen de la queja" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
+            <img mat-card-image [src]="dataToImage(queja.img) || 'https://via.placeholder.com/300'" alt="Imagen del evento" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
             <mat-card-content>
                 <br>
               <p><strong>Fecha de la queja:</strong> {{ queja.fechaReporte}}</p>
@@ -41,12 +42,13 @@
                 <span *ngIf="!queja.reportes || queja.reportes.length === 0">Ninguno</span>
               </p>
               <mat-card-actions>
-                
                 <button mat-raised-button color="accent" (click)="abrirGoogleMaps(queja.ubicacion)">Abrir Google Maps</button>
                 <mat-card-actions class="d-flex justify-content-between" *ngIf="loggedInUserId">
                   <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="!usuarioReportadoQueja(queja)"  (click)="abrirModalReportarQueja(queja.id)">Reportar Queja</button>
                   <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="usuarioReportadoQueja(queja)">Queja Reportada</button>
                 </mat-card-actions>
+                <button *ngIf="isAdmin()" (click)="eliminarQueja(queja.id)" mat-raised-button style="margin-bottom: 5px; background-color: #de271b; color: white;" >Eliminar Queja</button>
+                <button *ngIf="isAdmin()" (click)="editarQueja(queja.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px; " >Editar Queja</button>
               </mat-card-actions>
             </mat-card-content>
           </mat-card>

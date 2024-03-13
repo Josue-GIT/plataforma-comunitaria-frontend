@@ -4,7 +4,7 @@ export interface Queja{
     id: number;
     titulo: string;
     usuario: Usuario;
-    url: string;
+    img:string;
     ubicacion: string;
     descripcion: string;
     fechaReporte: string;

@@ -151,6 +151,7 @@ export class EventosComponent implements OnInit {
       );
     });
   }
+  
   usuarioRegistradoEnEvento(evento: Evento): boolean {
     if (!evento.participantes) {
       return false; // Si no hay participantes, el usuario no está registrado
@@ -216,6 +217,7 @@ export class EventosComponent implements OnInit {
       this.cargarEventos();
     });
   }
+  
   cerrarModal() {
     // Cierra el modal
     this.modalAbierto = false;

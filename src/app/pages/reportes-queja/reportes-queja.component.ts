@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ReporteQueja } from 'src/app/service/model/Queja';
 import { QuejaService } from 'src/app/service/queja/queja.service';
@@ -16,12 +17,18 @@ export class ReportesQuejaComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private reportesQuejaService: ReportarQuejaService,
-    private quejaService: QuejaService) { }
+    private quejaService: QuejaService,
+    private sanitizer : DomSanitizer) { }
 
   ngOnInit() {
     this.loggedInUserId = this.authService.getLoggedInUserId();
     this.cargarReportesQueja();
   }
+
+  dataToImage(dataURI: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + dataURI);
+  }
+
 
   cargarReportesQueja(): void {
     if (this.loggedInUserId) {
