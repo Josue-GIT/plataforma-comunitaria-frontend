@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Observable, map } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AgregarQuejaComponent } from 'src/app/modal-pages/parte-queja/agregar-queja/agregar-queja.component';
 import { EditarQuejaComponent } from 'src/app/modal-pages/parte-queja/editar-queja/editar-queja.component';
@@ -52,8 +53,10 @@ export class QuejasComponent {
     });
   }
 
-  isAdmin(): boolean {
-    return this.userRole === 'ADMIN';
+  isAdmin(): Observable<boolean> {
+    return this.authService.getUserRole().pipe(
+      map(rol => rol === 'ADMIN')
+    );
   }
 
 

@@ -15,7 +15,7 @@
         <a mat-button class="example-icon mr20" [routerLink]="'/quejas'">
             <h1>Quejas</h1>
         </a>
-        <ng-container *ngIf="isAdmin()" >
+        <ng-container *ngIf="isAdmin() | async" >
             <a mat-button class="example-icon mr20" [routerLink]="'/reportes-queja'">
                 <h1>Reportes de Queja</h1>
             </a>

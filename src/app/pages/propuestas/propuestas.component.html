@@ -1,7 +1,7 @@
 <br><br><br>
 
 <div class="container mt-5">
-    <div *ngIf="isAdmin()" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+    <div *ngIf="isAdmin() | async" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
         <div style="margin-right: 10px;">
           <img src="../../../assets/img/agregarpropuesta.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">
         </div>
@@ -29,8 +29,8 @@
             <span style="margin-right: 20px; margin-top: 10px;">{{ esObjeto(propuesta.votos) ? propuesta.votos.cantidadVotosPositivos : propuesta.votos || 0 }}</span>
             
             <span style="margin-top: 10px;">{{ propuesta.titulo }}</span>
-            <button *ngIf="isAdmin()" (click)="eliminarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 15px; background-color: #de271b; color: white;" >Eliminar propuesta</button>
-            <button *ngIf="isAdmin()" (click)="editarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 5px;" >Editar propuesta</button>
+            <button *ngIf="isAdmin() | async" (click)="eliminarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 15px; background-color: #de271b; color: white;" >Eliminar propuesta</button>
+            <button *ngIf="isAdmin() | async" (click)="editarPropuesta(propuesta.id)" mat-raised-button color="primary" style="margin-left: 5px;" >Editar propuesta</button>
             </mat-expansion-panel-header>
         
             <div>

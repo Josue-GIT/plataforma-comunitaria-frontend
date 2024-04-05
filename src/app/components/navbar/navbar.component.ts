@@ -1,7 +1,7 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -40,8 +40,10 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
-  isAdmin(): boolean {
-    return this.userRole === 'ADMIN';
+  isAdmin(): Observable<boolean> {
+    return this.authService.getUserRole().pipe(
+      map(role => role === 'ADMIN')
+    );
   }
 }
 

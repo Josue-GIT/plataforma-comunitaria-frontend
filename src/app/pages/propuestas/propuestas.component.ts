@@ -2,6 +2,7 @@
 import { MatDialog } from '@angular/material/dialog';
   import { MatIconRegistry } from '@angular/material/icon';
   import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Observable, map } from 'rxjs';
   import { AuthService } from 'src/app/auth/auth.service';
 import { AgregarPropuestaComponent } from 'src/app/modal-pages/parte-propuesta/agregar-propuesta/agregar-propuesta.component';
 import { EditarPropuestaComponent } from 'src/app/modal-pages/parte-propuesta/editar-propuesta/editar-propuesta.component';
@@ -57,10 +58,11 @@ import Swal from 'sweetalert2';
       return this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + dataURI);
     }
 
-    isAdmin(): boolean {
-      return this.userRole === 'ADMIN';
+    isAdmin(): Observable<boolean> {
+      return this.authService.getUserRole().pipe(
+        map(rol => rol === 'ADMIN')
+      );
     }
-
     cancelarVotoPositivo(idPropuesta: number) {
       this.votosPropuestaService.cancelarVotoPositivo(idPropuesta, this.loggedInUserId ?? 0).subscribe(
         (response) => {

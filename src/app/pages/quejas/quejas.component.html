@@ -47,8 +47,8 @@
                   <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="!usuarioReportadoQueja(queja)"  (click)="abrirModalReportarQueja(queja.id)">Reportar Queja</button>
                   <button mat-raised-button color="warn" style="margin-left: 10px;"  *ngIf="usuarioReportadoQueja(queja)">Queja Reportada</button>
                 </mat-card-actions>
-                <button *ngIf="isAdmin()" (click)="eliminarQueja(queja.id)" mat-raised-button style="margin-bottom: 5px; background-color: #de271b; color: white;" >Eliminar Queja</button>
-                <button *ngIf="isAdmin()" (click)="editarQueja(queja.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px; " >Editar Queja</button>
+                <button *ngIf="isAdmin() | async" (click)="eliminarQueja(queja.id)" mat-raised-button style="margin-bottom: 5px; background-color: #de271b; color: white;" >Eliminar Queja</button>
+                <button *ngIf="isAdmin() | async" (click)="editarQueja(queja.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px; " >Editar Queja</button>
               </mat-card-actions>
             </mat-card-content>
           </mat-card>

@@ -1,6 +1,6 @@
 <br><br><br>
 <div class="container mt-5">
-    <div *ngIf="isAdmin()" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+    <div *ngIf="isAdmin() | async" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
       <div>
         <!-- Imagen a la izquierda -->
         <img src="../../../assets/img/obrero.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">

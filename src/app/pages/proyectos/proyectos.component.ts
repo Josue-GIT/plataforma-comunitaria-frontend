@@ -2,6 +2,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Observable, map } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AgregarProyectoComponent } from 'src/app/modal-pages/parte-proyecto/agregar-proyecto/agregar-proyecto.component';
 import { EditarProyectoComponent } from 'src/app/modal-pages/parte-proyecto/editar-proyecto/editar-proyecto.component';
@@ -64,8 +65,10 @@ export class ProyectosComponent {
 
   }
 
-  isAdmin(): boolean {
-    return this.userRole === 'ADMIN';
+  isAdmin(): Observable<boolean> {
+    return this.authService.getUserRole().pipe(
+      map(rol => rol === 'ADMIN')
+    );
   }
 
   registrarProyecto() {

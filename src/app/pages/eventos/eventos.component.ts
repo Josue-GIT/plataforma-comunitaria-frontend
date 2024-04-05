@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { AgregarEventoComponent } from 'src/app/modal-pages/parte-evento/agregar-evento/agregar-evento.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarEventoComponent } from 'src/app/modal-pages/parte-evento/editar-evento/editar-evento.component';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-eventos',
@@ -191,8 +192,10 @@ export class EventosComponent implements OnInit {
     });
   }
 
-  isAdmin(): boolean {
-    return this.userRole === 'ADMIN';
+  isAdmin(): Observable<boolean> {
+    return this.authService.getUserRole().pipe(
+      map(rol => rol === 'ADMIN')
+    );
   }
 
   onPaginateChange(event: PageEvent): void {

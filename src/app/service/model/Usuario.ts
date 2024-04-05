@@ -7,3 +7,7 @@ export interface Usuario {
     vetado: boolean;
 
   }
+  export interface Roles{
+    idrol: number;
+    nombre: string;
+}

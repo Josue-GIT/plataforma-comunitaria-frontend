@@ -4,7 +4,7 @@
 <div class="container mt-5">
   <div class="container mt-5">
     <!-- Botón para agregar evento (exclusivo para admin) -->
-    <div *ngIf="isAdmin()" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+    <div *ngIf="isAdmin() | async" class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
       <div>
         <!-- Imagen a la izquierda -->
         <img src="../../../assets/img/avatarEvento.png" alt="Imagen" class="img-fluid" style="max-width: 300px; margin-left: 60px;">
@@ -32,8 +32,8 @@
           <mat-card>
             <mat-card-header>
               <mat-card-title>{{ evento.titulo }}</mat-card-title>
-              <button *ngIf="isAdmin()" (click)="eliminarEvento(evento.id)" mat-raised-button style="margin-bottom: 5px; background-color: #de271b; color: white;" >Eliminar evento</button>
-              <button *ngIf="isAdmin()" (click)="editarEvento(evento.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px;" >Editar evento</button>
+              <button *ngIf="isAdmin() | async" (click)="eliminarEvento(evento.id)" mat-raised-button style="margin-bottom: 5px; background-color: #de271b; color: white;" >Eliminar evento</button>
+              <button *ngIf="isAdmin() | async" (click)="editarEvento(evento.id)" mat-raised-button color="primary" style="margin-left: 5px ; margin-bottom: 5px;" >Editar evento</button>
             </mat-card-header>
             <img mat-card-image [src]="dataToImage(evento.img) || 'https://via.placeholder.com/300'" alt="Imagen del evento" class="img-fluid" style="width: 390px; height: 250px; border-radius: 5px; margin-left: 14px;">
            

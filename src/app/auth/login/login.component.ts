@@ -42,19 +42,16 @@ export class LoginComponent implements OnInit {
       this.authService.login({ username, password}).subscribe(
         (user) => {
           console.log("inicio de sesión correcto");
-          this.authService.setLoggedInUser(user);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']); // Redireccionar al usuario a la página de inicio
         },
         (error) => {
           this.loginError = 'Credenciales no válidas';
           localStorage.setItem('loginError', this.loginError);
           console.log(error);
-          setTimeout(() => {
-
-          });
         }
       );
     }
   }
+
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { jwtDecode } from "jwt-decode";
 
 
 @Injectable({
@@ -8,48 +9,58 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth';
-  private loggedInUser: any;
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string | null>(null);
+  private tokenKey = 'jwtToken';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const token = localStorage.getItem(this.tokenKey);
+    if (token) {
+      this.setToken(token);
+    }
+  }
 
   login(credentials: any): Observable<any> {
-    this.loggedIn.next(true);
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      map(user => {
-        if (user) {
-          this.loggedIn.next(true);
-          this.setLoggedInUser(user);
-          this.userRole.next(user.rol);
+      map(response => {
+        const token = response.token;
+        if (token) {
+          this.setToken(token);
         }
-        return user;
+        return response;
       })
     );
   }
-  
+
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
-  }
-  isLoggedInValue(): boolean {
-    return this.loggedIn.getValue();
-  }
-
-  setLoggedInUser(user: any): void {
-    this.loggedInUser = user;
   }
 
   getUserRole(): Observable<string | null> {
     return this.userRole.asObservable();
   }
-  
+
   getLoggedInUserId(): number | null {
-    return this.loggedInUser ? this.loggedInUser.id : null;
+    const token = localStorage.getItem(this.tokenKey);
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.userId;
+    }
+    return null;
   }
 
   logout(): void {
+    localStorage.removeItem(this.tokenKey);
     this.loggedIn.next(false);
     this.userRole.next(null);
   }
+
+  private setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    const decodedToken: any = jwtDecode(token);
+    this.loggedIn.next(true);
+    this.userRole.next(decodedToken.rol.nombre);
+  }
+
   
 }
